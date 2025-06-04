@@ -60,7 +60,7 @@ function ApiKeyInput() {
         </button>
       </div>
       <p className="mt-2 text-sm text-gray-500">
-        No API key? Try our <a href="https://loraai.io/flux-kontext" className="text-orange-600 hover:text-orange-700 underline">ready-to-use version</a> with no setup required.
+       Try our <a href="https://loraai.io/flux-kontext" className="text-orange-600 hover:text-orange-700 underline">ready-to-use version</a> - No Key Needed. You can taking a look at the <a href="https://github.com/lkunxyz/kontext-chat" className="text-orange-600 hover:text-orange-700 underline">source code</a> on GitHub
       </p>
     </div>
   );
@@ -70,12 +70,12 @@ function PoweredByBanner() {
   return (
     <div className="bg-orange-500 text-white text-center text-base md:text-lg py-2">
       <a
-        href="https://github.com/replicate/kontext-chat"
+        href="https://loraai.io/flux-kontext"
         target="_blank"
         rel="noopener noreferrer"
         className="underline"
       >
-        Powered by FLUX.1 Kontext on Replicate
+        Powered by FLUX.1 Kontext | Try Direct Version
       </a>
     </div>
   );
