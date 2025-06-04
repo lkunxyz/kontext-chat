@@ -58,10 +58,14 @@ async function uploadToCloudflareImages(
 
 app.post('/generate-image', async (c) => {
         try {
-                const replicate = new Replicate({ auth: c.env.REPLICATE_API_TOKEN });
-                const model = 'black-forest-labs/flux-kontext-pro';
+                const { prompt, input_image, api_key } = await c.req.json();
 
-                const { prompt, input_image } = await c.req.json();
+                if (!api_key) {
+                        return c.json({ error: 'API key is required' }, 400);
+                }
+
+                const replicate = new Replicate({ auth: api_key });
+                const model = 'black-forest-labs/flux-kontext-pro';
 
                 // Generate image with Replicate
                 const output = await replicate.run(model, {
@@ -71,7 +75,11 @@ app.post('/generate-image', async (c) => {
                         },
                 });
 
-                const replicateImageUrl = output as string;
+                if (typeof output !== 'string') {
+                        throw new Error('Unexpected response from Replicate');
+                }
+
+                const replicateImageUrl = output;
 
                 // Upload to Cloudflare Images for permanent storage
                 const cloudflareImageUrl = await uploadToCloudflareImages(
@@ -82,9 +90,10 @@ app.post('/generate-image', async (c) => {
 
                 // Return the Cloudflare Images URL instead of the temporary Replicate URL
                 return c.json({ imageUrl: cloudflareImageUrl });
-        } catch (error) {
+        } catch (error: unknown) {
                 console.error('Error in generate-image:', error);
-                return c.json({ error: error.message }, 500);
+                const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+                return c.json({ error: errorMessage }, 500);
         }
 });
 
