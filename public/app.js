@@ -21,7 +21,7 @@ const starterImages = [
   }
 ]
 
-function ApiKeyInput() {
+function ApiKeyInput({ showTips = true }) {
   const [apiKey, setApiKey] = React.useState(() => localStorage.getItem('replicateApiKey') || '');
   const [isVisible, setIsVisible] = React.useState(false);
 
@@ -33,7 +33,7 @@ function ApiKeyInput() {
 
   return (
     <div className="relative mb-4">
-      <label className="block text-sm font-medium text-gray-700 mb-1">[Optional] API Key</label>
+      {showTips ? <label className="block text-sm font-medium text-gray-700 mb-1">[Optional] API Key</label> : <></>}
       <div className="relative">
         <input
           type={isVisible ? "text" : "password"}
@@ -568,6 +568,8 @@ function App() {
                   Kontext Chat is powered by <a href="https://replicate.com/black-forest-labs/flux-kontext-pro?utm_source=project&utm_campaign=kontext-chat" className="underline text-orange-600 hover:text-orange-700">Flux Kontext Pro</a>, a new image model from <a href="https://black-forest-labs.com/" className="underline text-orange-600 hover:text-orange-700">Black Forest Labs</a>. Kontext adds a key input feature on top of <a href="https://github.com/replicate/kontext-chat" className="underline text-orange-600 hover:text-orange-700">original version</a>, allowing users to input their own API keys. Learn how to build your own app by taking a look at the <a href="https://github.com/lkunxyz/kontext-chat" className="underline text-orange-600 hover:text-orange-700">source code</a> on GitHub.
                 </p>
               </div>
+
+             
             </div>
           </div>
         ) : (
@@ -593,6 +595,12 @@ function App() {
               />
             </div>
             <PoweredByBanner />
+
+             {/* Add API Key Input */}
+             <div className="px-6">
+                <ApiKeyInput showTips={false}/>
+            </div>
+              
 
             {/* Chat Messages */}
             <div className="flex-1 overflow-y-auto p-6 space-y-4 pb-56 md:pb-6" ref={chatContainerRef}>
@@ -646,6 +654,7 @@ function App() {
 
             {/* Input Area */}
             <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4 md:relative md:border-t" style={{paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))'}}>
+              
               <form onSubmit={handleSend} className="flex items-end gap-3 max-w-4xl mx-auto">
                 <div className="flex-1 relative">
                   <div className="bg-gray-50 rounded-3xl px-4 py-3 pr-12 border-2 border-transparent focus-within:border-orange-500 transition-colors">
@@ -692,6 +701,8 @@ function App() {
                   </div>
                 </div>
               </form>
+
+              
             </div>
           </div>
         )}
