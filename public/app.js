@@ -70,7 +70,7 @@ function PoweredByBanner() {
   return (
     <div className="bg-orange-500 text-white text-center text-base md:text-lg py-2">
       <a
-        href="https://loraai.io/flux-kontext"
+        href="https://chat-photo.com/flux-kontext"
         target="_blank"
         rel="noopener noreferrer"
         className="underline"
